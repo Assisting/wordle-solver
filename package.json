@@ -1,0 +1,26 @@
+{
+  "name": "wordle-solver",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Because words are hard.",
+  "main": "build/app.js",
+  "scripts": {
+    "start": "tsc && node --experimental-specifier-resolution=node build/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Assisting/wordle-solver.git"
+  },
+  "author": "Erik LaBine",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Assisting/wordle-solver/issues"
+  },
+  "homepage": "https://github.com/Assisting/wordle-solver#readme",
+  "dependencies": {
+    "@neopass/wordlist": "^0.5.2",
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.10",
+    "express": "^4.17.2"
+  }
+}
