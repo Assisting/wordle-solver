@@ -1,4 +1,4 @@
-import { LetterAndPlace } from "./types";
+import { LetterAndPlace, Suggestions } from "./types";
 import { IListOptions, wordList } from '@neopass/wordlist';
 
 let options: IListOptions = {
@@ -11,9 +11,9 @@ let options: IListOptions = {
 /**
  * Returns the next suggested word to solve the puzzle, given the current game state.
  */
-export async function solve(inPlace: Array<LetterAndPlace>, wrongPlace: Array<LetterAndPlace>, notPresent: Array<string>): Promise<Array<LetterAndPlace>> {
+export async function solve(inPlace: Array<LetterAndPlace>, wrongPlace: Array<LetterAndPlace>, notPresent: Array<string>): Promise<Suggestions> {
     if (inPlace.length === 5) {
-        return inPlace;
+        return new Suggestions([inPlace], 1);
     }
     
     let words: Array<string> = [];
@@ -28,19 +28,17 @@ export async function solve(inPlace: Array<LetterAndPlace>, wrongPlace: Array<Le
 
     // Filter based on game state
     inPlace.forEach((letterInPlace: LetterAndPlace) => {
-        words = words.filter(word => word.charAt(letterInPlace.Place) == letterInPlace.Letter);
+        words = words.filter(word => word.charAt(letterInPlace.place) == letterInPlace.letter);
     });
     wrongPlace.forEach((letterInWrongPlace: LetterAndPlace) => {
-        words = words.filter(word => word.charAt(letterInWrongPlace.Place) != letterInWrongPlace.Letter
-                                  && word.indexOf(letterInWrongPlace.Letter) != -1);
+        words = words.filter(word => word.charAt(letterInWrongPlace.place) != letterInWrongPlace.letter
+                                  && word.indexOf(letterInWrongPlace.letter) != -1);
     });
     notPresent.forEach((letterNotPresent: string) => {
         words = words.filter(word => word.indexOf(letterNotPresent) === -1);
     });
 
-    console.log(`There are ${words.length} remaining possibilities.`);
-
-    return stringToLetterAndPlace(words[0]);
+    return new Suggestions([stringToLetterAndPlace(words[0])], words.length);
 }
 
 export function stringToLetterAndPlace(input: string): Array<LetterAndPlace> {
