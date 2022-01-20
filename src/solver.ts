@@ -3,8 +3,7 @@ import { IListOptions, wordList } from '@neopass/wordlist';
 
 let options: IListOptions = {
     paths: [
-        '/usr/share/dict/words',
-        '$default'
+        'OrderedWordList.txt'
     ],
     mutator: 'to-lower'
 };
@@ -41,8 +40,7 @@ export async function solve(inPlace: Array<LetterAndPlace>, wrongPlace: Array<Le
 
     console.log(`There are ${words.length} remaining possibilities.`);
 
-    const randomIndex: number = Math.floor(Math.random() * words.length);
-    return stringToLetterAndPlace(words[randomIndex]);
+    return stringToLetterAndPlace(words[0]);
 }
 
 export function stringToLetterAndPlace(input: string): Array<LetterAndPlace> {
